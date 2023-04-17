@@ -1,12 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Button,{ButtonType} from './components/Button/button';
+
 
 function App() {
   return (
     <div className="App">
+      <Button btnType={ButtonType.Primary} >222</Button>
+      <Button onClick={()=>{console.log(222); }}>yyy</Button>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
