@@ -1,12 +1,20 @@
 import React from 'react';
 import Button,{ButtonType} from './components/Button/button';
-
-
+import Menu from "./components/Menu/menu";
+import MenuItem from './components/Menu/menuItem'
+import SubMenu from "./components/Menu/subMenu";
 function App() {
   return (
     <div className="App">
-      <Button btnType={ButtonType.Primary} >222</Button>
-      <Button onClick={()=>{console.log(222); }}>yyy</Button>
+        <Menu defaultIndex='1' mode='vertical'  onSelect={handleClick}>
+            <MenuItem>color index</MenuItem>
+            <MenuItem>color index</MenuItem>
+            <SubMenu title='2'>
+                <MenuItem>2</MenuItem>
+            </SubMenu>
+        </Menu>
+
+
       <header className="App-header">
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -23,5 +31,7 @@ function App() {
     </div>
   );
 }
-
+function handleClick(){
+    console.log(222)
+}
 export default App;
