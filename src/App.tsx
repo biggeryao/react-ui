@@ -3,10 +3,19 @@ import Button,{ButtonType} from './components/Button/button';
 import Menu from "./components/Menu/menu";
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from "./components/Menu/subMenu";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Icon from "./components/Icon/icon";
+import  {library} from "@fortawesome/fontawesome-svg-core";
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
 function App() {
   return (
     <div className="App">
-        <Menu defaultIndex='1' mode='vertical'  onSelect={handleClick}>
+        <Icon icon="coffee" theme="primary"/>
+
+
+        <Menu defaultIndex='2' mode='vertical'  onSelect={handleClick} defaultOpenSubMenus={['2']}>
             <MenuItem>color index</MenuItem>
             <MenuItem>color index</MenuItem>
             <SubMenu title='2'>
