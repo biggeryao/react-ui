@@ -7,10 +7,10 @@ const defaultProps ={
 }
 
 
-const tetsProps ={
-    btnType:ButtonType.Primary,
+const tetsProps:ButtonProps ={
+    btnType:'primary',
     className:'buton1',
-    size:ButtonSize.Large
+    size:'lg'
 }
 test('demo',()=>{
     const view =render(<Button {...defaultProps}>nice</Button>)
