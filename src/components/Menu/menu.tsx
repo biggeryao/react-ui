@@ -1,6 +1,6 @@
 import React, {useState, createContext} from "react";
 import classNames from "classnames";
-import MenuItem, {MenuItemProps} from "./menuItem";
+import  {MenuItemProps} from "./menuItem";
 
 type MenuMode = 'horizontal' | 'vertical'
 

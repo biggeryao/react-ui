@@ -1,4 +1,4 @@
-import React, {CSSProperties, useContext} from "react";
+import React, {useContext} from "react";
 import classNames from "classnames";
 import {MenuContext} from "./menu";
 
@@ -20,7 +20,7 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
     })
 
     const handleClick = () => {
-        if (context.onSelect && !disabled&&(typeof index === 'string')) {
+        if (context.onSelect && !disabled && (typeof index === 'string')) {
             context.onSelect(index)
         }
     }

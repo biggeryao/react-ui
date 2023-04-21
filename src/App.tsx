@@ -1,17 +1,25 @@
 import React from 'react';
-import Button,{ButtonType} from './components/Button/button';
 import Menu from "./components/Menu/menu";
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from "./components/Menu/subMenu";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Icon from "./components/Icon/icon";
 import  {library} from "@fortawesome/fontawesome-svg-core";
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import Input from "./components/Input/input";
 
 library.add(fas)
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
+
+
+        <Input
+            size="lg"
+            defaultValue="22"
+            icon="coffee"
+            prepend={<div>222</div>}
+            onChange={e=>{console.log(e.target)}}
+        ></Input>
         <Icon icon="coffee" theme="primary"/>
 
 
