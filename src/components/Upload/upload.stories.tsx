@@ -2,7 +2,7 @@ import React from "react";
 import {ComponentMeta, ComponentStory, storiesOf} from "@storybook/react";
 import Upload, {UploadFile} from "./upload";
 import {FILE} from "dns";
-
+import Icon from "../Icon/icon";
 
 
 export default {
@@ -26,7 +26,7 @@ const SimpleComplete: ComponentMeta<typeof Upload> = {
 
 }
 
-const beforeUpload=(file:File)=>{
+const beforeUpload = (file: File) => {
     // if(Math.round(file.size/1024)>50){
     //     alert('to big')
     //     return false
@@ -38,22 +38,28 @@ const beforeUpload=(file:File)=>{
     // return Promise.resolve(newFile)
 }
 
-const changeFile=(file:File)=>{
+const changeFile = (file: File) => {
 
 }
-const  defaultFileList:UploadFile[]=[
-    {uid:'111',size:22,name:'xxx.md',status:'success',percent:20},
-    {uid:'1121',size:123,name:'xxx1.md',status:'error',percent:20},
-    {uid:'1131',size:444,name:'xxx2.md',status:'uploading',percent:20},
+const defaultFileList: UploadFile[] = [
+    {uid: '111', size: 22, name: 'xxx.md', status: 'success', percent: 20},
+    {uid: '1121', size: 123, name: 'xxx1.md', status: 'error', percent: 20},
+    {uid: '1131', size: 444, name: 'xxx2.md', status: 'uploading', percent: 20},
 ]
 export const SimpleComplete1: ComponentStory<typeof Upload> = (args) => {
 
     return (
         <Upload
-            onChange={changeFile}
+            {...args}
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            defaultFileList={defaultFileList}
-        ></Upload>
+            name="fileName"
+            multiple
+            drag
+        >
+            <Icon icon="upload" size="5x" theme="secondary" />
+            <br/>
+            <p>点击或者拖动到此区域进行上传</p>
+        </Upload>
     )
 }
 SimpleComplete1.storyName = 'upload 组件'
