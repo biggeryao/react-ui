@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Menu from "./components/Menu/menu";
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from "./components/Menu/subMenu";
@@ -6,13 +6,18 @@ import Icon from "./components/Icon/icon";
 import  {library} from "@fortawesome/fontawesome-svg-core";
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Input from "./components/Input/input";
-
+import axios from "axios";
 library.add(fas)
 function App() {
+    const [title,setTitle]=useState('')
+    useEffect(()=>{
+        axios.get('https://jsonplaceholder.typicode.com/posts/1').then(resp=>{
+            setTitle(resp.data.title)
+        })
+    })
   return (
     <div className="App" >
-
-
+        <h2>{title}</h2>
         <Input
             size="lg"
             defaultValue="22"
