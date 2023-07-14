@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {FormContext} from './form'
 import Schema,{RuleItem} from "async-validator";
 import {CustomRule} from "./useStore";
-interface FormItemProps {
+export interface FormItemProps {
     name: string
     label?: string
     children?: React.ReactNode

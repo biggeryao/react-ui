@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {TabItemProps} from "./tabItem";
 
 
-interface TabsProps {
+export interface TabsProps {
     defaultIndex?: number,
     className?: string,
     onSelect?: Function,
