@@ -55,5 +55,5 @@ Alert.defaultProps = {
     closable: true,
     type: 'success',
     message: '提示',
-    description: '描述'
+    description: ''
 }
