@@ -2,7 +2,7 @@ import React, {ReactNode} from "react";
 
 
 export interface TabItemProps{
-    label?:string,
+    label: string | React.ReactElement;
     disabled?:boolean,
     children?: ReactNode;
 }

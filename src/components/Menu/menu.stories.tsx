@@ -1,10 +1,9 @@
 import {ComponentMeta, ComponentStory} from "@storybook/react";
-import AutoComplete from "../AutoComplete";
 import Menu from './index'
 
-const MenuMete: ComponentMeta<typeof AutoComplete> = {
+const MenuMete: ComponentMeta<typeof Menu> = {
     title: 'Menu',
-    component: AutoComplete,
+    component: Menu,
     tags: ['autodocs'],
     parameters: {
         docs: {
@@ -17,7 +16,7 @@ const MenuMete: ComponentMeta<typeof AutoComplete> = {
 export default MenuMete
 
 export const Default:ComponentStory<typeof Menu>=(args)=>{
-    return (  <Menu defaultIndex='0' {...args} >
+    return (  <Menu defaultIndex='0' mode="horizontal" {...args} >
         <Menu.Item>
             cool link
         </Menu.Item>

@@ -56,30 +56,31 @@ function fieldsReducer(state: FieldsState, action: FieldAction): FieldsState {
     }
 }
 
-function useStore(initialValues?:Record<string, any>) {
-    const [form, setForm] = useState({isValid: true,isSubmitting:false,errors:{}})
-    const [fields, dispatch] = useReducer(fieldsReducer, {})
-    const getFieldValue=(key:string)=>{
-        return fields[key]&&fields[key].value
+function useStore(initialValues?: Record<string, any>) {
+    // form state
+    const [ form, setForm ] = useState<FormState>({ isValid: true, isSubmitting: false, errors: {} })
+    const [ fields, dispatch ] = useReducer(fieldsReducer, {})
+    const getFieldValue = (key: string) => {
+        return fields[key] && fields[key].value
     }
-    const getFieldsValue=()=>{
-        return mapValues(fields,item=>item.value)
+    const getFieldsValue = () => {
+        return mapValues(fields, item => item.value)
     }
-    const setFieldValue=(name:string,value:any)=>{
-        if(fields[name]){
-            dispatch({type:'updateValue',name,value})
+    const setFieldValue = (name: string, value: any) => {
+        if (fields[name]) {
+            dispatch({ type: 'updateValue', name, value })
         }
     }
-    const resetFieldValue=()=>{
-        if(initialValues){
-                each(initialValues,(value,name)=>{
-                    if(fields[name]){
-                        dispatch({type:'updateValue',name,value})
-                    }
-                })
+    const resetFields = () => {
+        if (initialValues) {
+            each(initialValues, (value, name) => {
+                if (fields[name]) {
+                    dispatch({ type: 'updateValue', name, value})
+                }
+            })
         }
     }
-    const transformRules = (rules: CustomRule[]) => {
+    const transfromRules = (rules: CustomRule[]) => {
         return rules.map(rule => {
             if (typeof rule === 'function') {
                 const calledRule = rule({ getFieldValue })
@@ -90,8 +91,8 @@ function useStore(initialValues?:Record<string, any>) {
         })
     }
     const validateField = async (name: string) => {
-        const {value, rules} = fields[name]
-        const afterRules=transformRules(rules)
+        const { value, rules } = fields[name]
+        const afterRules = transfromRules(rules)
         const descriptor = {
             [name]: afterRules
         }
@@ -103,7 +104,6 @@ function useStore(initialValues?:Record<string, any>) {
         let errors: ValidateError[] = []
         try {
             await validator.validate(valueMap)
-
         } catch (e) {
             isValid = false
             const err = e as any
@@ -112,38 +112,39 @@ function useStore(initialValues?:Record<string, any>) {
             errors = err.errors
         } finally {
             console.log('errors', isValid)
-            dispatch({type: 'updateValidateResult', name, value: {isValid, errors}})
+            dispatch({ type: 'updateValidateResult', name, value: { isValid, errors }})
         }
     }
-
-    const validateAllFields=async ()=>{
-        let isValid=true
-        let errors:Record<string, ValidateError[]>={}
-        const valueMap=mapValues(fields,item=>item.value)
-        const descriptor=mapValues(fields,item=>transformRules(item.rules))
-        const validator=new Schema(descriptor)
-        setForm({...form,isSubmitting: true})
-
-        try{
+    const validateAllFields = async () => {
+        let isValid = true
+        let errors: Record<string, ValidateError[]> = {}
+        const valueMap = mapValues(fields, item => item.value)
+        // {'username': 'abc'}
+        const descriptor = mapValues(fields, item => transfromRules(item.rules))
+        const validator = new Schema(descriptor)
+        setForm({ ...form, isSubmitting: true })
+        try {
             await validator.validate(valueMap)
-        }catch (e){
-            isValid=false
-            const err=e as ValidateErrorType
-            errors=err.fields
-            each(fields,(value,name)=>{
-                if(errors[name]){
-                    const itemErrors=errors[name]
-                    dispatch({type: 'updateValidateResult', name, value: {isValid:false, errors:itemErrors}})
-                }else if(value.rules.length>0&&!errors[name]){
-                    dispatch({type: 'updateValidateResult', name, value: {isValid:false, errors:[]}})
+        } catch(e) {
+            isValid = false
+            const err = e as ValidateErrorType
+            errors = err.fields
+            each(fields, (value, name) => {
+                // errors 中有对应的 key
+                if (errors[name]) {
+                    const itemErrors = errors[name]
+                    dispatch({ type: 'updateValidateResult', name, value: { isValid: false, errors: itemErrors }})
+                } else if (value.rules.length > 0 && !errors[name]) {
+                    dispatch({ type: 'updateValidateResult', name, value: { isValid: true, errors: [] }})
                 }
+                //  有对应的 rules，并且没有 errors
             })
-        }finally {
-            setForm({...form,isSubmitting: false,isValid,errors})
+        } finally {
+            setForm({ ...form, isSubmitting: false, isValid, errors })
             return {
                 isValid,
                 errors,
-                values:valueMap
+                values: valueMap
             }
         }
     }
@@ -154,10 +155,11 @@ function useStore(initialValues?:Record<string, any>) {
         validateField,
         getFieldValue,
         validateAllFields,
-        resetFieldValue,
+        getFieldsValue,
         setFieldValue,
-        getFieldsValue
+        resetFields,
     }
 }
+
 
 export default useStore

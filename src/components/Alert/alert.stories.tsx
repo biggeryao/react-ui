@@ -11,17 +11,17 @@ const AlertMete: ComponentMeta<typeof Alert> = {
 export default AlertMete
 
 export const Default: ComponentStory<typeof Alert> = (args) => {
-    return (<Alert {...args} message="Alert!" type="success"></Alert>)
+    return (<Alert {...args} title="Alert!" type="success"></Alert>)
 }
 export const CDescAlert: ComponentStory<typeof Alert> = (args) => {
-    return (<Alert {...args} message="Alert!" description="描述" type="success"></Alert>)
+    return (<Alert {...args} title="Alert!" description="描述" type="success"></Alert>)
 }
 export const BStylesAlert: ComponentStory<typeof Alert> = (args) => {
     return (
         <>
-            <Alert message="this is Success" type="success"></Alert>
-            <Alert message="this is Danger!" type="danger"></Alert>
-            <Alert message="this is Warning!" type="warning" closable={false}></Alert>
+            <Alert title="this is Success" type="success"></Alert>
+            <Alert title="this is Danger!" type="danger"></Alert>
+            <Alert title="this is Warning!" type="warning" closable={false}></Alert>
         </>
     )
 }

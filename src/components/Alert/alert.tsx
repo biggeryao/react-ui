@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 import Icon from "../Icon/icon";
 import classNames from "classnames";
 import Transition from "../Transition/transition";
@@ -6,17 +6,30 @@ import Transition from "../Transition/transition";
 export type  AlertType = 'success' | 'default' | 'danger' | 'warning'
 
 interface AlertProps {
-    onClose?: Function
-    description?: string
-    message: string;
-    type?: AlertType
+    /**标题 */
+    title: string;
+    /**描述 */
+    description?: string;
+    /**类型 四种可选 针对四种不同的场景 */
+    type?: AlertType;
+    /**关闭alert时触发的事件 */
+    onClose?: () => void;
+    /**是否显示关闭图标*/
     closable?: boolean;
 }
 
-const Alert: React.FC<AlertProps> = (props) => {
+/**
+ * 页面中最常用的的按钮元素，适合于完成特定的交互，支持 HTML button 和 a 链接 的所有属性
+ * ### 引用方法
+ *
+ * ```javascript
+ * import { Button } from 'yao-react-ui'
+ * ```
+ */
+export const Alert: FC<AlertProps> = (props) => {
     const [hide, setHide] = useState(false)
     const {
-        message,
+        title,
         type,
         description,
         onClose,
@@ -25,7 +38,7 @@ const Alert: React.FC<AlertProps> = (props) => {
     const classes = classNames('viking-alert', {
         [`viking-alert-${type}`]: type,
     })
-    const messageClass = classNames('viking-alert-title', {
+    const titleClass = classNames('viking-alert-title', {
         'bold-title': description
     })
     const handleClose = () => {
@@ -41,7 +54,7 @@ const Alert: React.FC<AlertProps> = (props) => {
             animation="zoom-in-top"
         >
             <div className={classes}>
-                <span className={messageClass}>{message}</span>
+                <span className={titleClass}>{title}</span>
                 {description && <p className="viking-alert-desc">{description}</p>}
                 {closable && <span className="viking-alert-close" onClick={handleClose}><Icon icon="times"/></span>}
             </div>
@@ -49,11 +62,9 @@ const Alert: React.FC<AlertProps> = (props) => {
     )
 }
 
-export default Alert
 
 Alert.defaultProps = {
+    type: 'default',
     closable: true,
-    type: 'success',
-    message: '提示',
-    description: ''
 }
+export default Alert;

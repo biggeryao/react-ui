@@ -1,4 +1,4 @@
-import React, {ChangeEvent, InputHTMLAttributes, ReactElement} from "react";
+import React, {ChangeEvent, forwardRef, InputHTMLAttributes, ReactElement} from "react";
 import classNames from 'classnames'
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import Icon from "../Icon/icon";
@@ -8,16 +8,30 @@ type  InputSize = 'lg' | 'sm'
 
 //InputHTMLAttributes中有 size（number）和InputProps定义的size（string）冲突了。使用Omit 忽略size
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>, 'size'> {
-    disabled?: boolean,
-    size?: InputSize,
-    icon?: IconProp,
-    prepend?: string | ReactElement,
+    /**是否禁用 Input */
+    disabled?: boolean;
+    /**设置 input 大小，支持 lg 或者是 sm */
+    size?: InputSize;
+    /**添加图标，在右侧悬浮添加一个图标，用于提示 */
+    icon?: IconProp;
+    /**添加前缀 用于配置一些固定组合 */
+    prepend?: string | ReactElement;
+    /**添加后缀 用于配置一些固定组合 */
     append?: string | ReactElement,
     onChange?:(e:ChangeEvent<HTMLInputElement>)=>void
 }
 
-
-export const Input: React.FC<InputProps> = (props) => {
+/**
+ * Input 输入框 通过鼠标或键盘输入内容，是最基础的表单域的包装。
+ *
+ * ~~~js
+ * // 这样引用
+ * import { Input } from 'vikingship'
+ * ~~~
+ *
+ * 支持 HTMLInput 的所有基本属性
+ */
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     //取出不同的属性
     const {disabled, size, icon, prepend, append, style,onChange, ...restProps} = props
 
@@ -53,5 +67,5 @@ export const Input: React.FC<InputProps> = (props) => {
             {append && <div className="viking-input-group-append">{append}</div>}
         </div>
     )
-}
+})
 export default Input

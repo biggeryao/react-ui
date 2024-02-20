@@ -3,63 +3,56 @@ import {ComponentMeta, ComponentStory, storiesOf} from "@storybook/react";
 import Upload, {UploadFile} from "./upload";
 import {FILE} from "dns";
 import Icon from "../Icon/icon";
+import Button from "../Button";
 
 
-export default {
-    title: 'upload 组件',
-    component: Upload,
-    id: 'Upload',
-    parameters: {
-        docs: {
-            source: {
-                type: "code",
-            },
-        }
-    }
-    // argTypes: { onClick: { action: 'clicked' }, onSelect: { action: 'selected' }, onChange: { action: 'changed' } },
-} as ComponentMeta<typeof Upload>
-
-const SimpleComplete: ComponentMeta<typeof Upload> = {
-    title: 'AutoComplete',
+const upLoadMeta: ComponentMeta<typeof Upload> = {
+    title: 'Upload',
     component: Upload,
     tags: ['autodocs'],
 
 }
+export default upLoadMeta
 
-const beforeUpload = (file: File) => {
-    // if(Math.round(file.size/1024)>50){
-    //     alert('to big')
-    //     return false
-    // }else {
-    //     return  true
-    // }
-
-    // const newFile=new File(['file'],'new.doc',{type:file.type})
-    // return Promise.resolve(newFile)
-}
-
-const changeFile = (file: File) => {
-
-}
-const defaultFileList: UploadFile[] = [
-    {uid: '111', size: 22, name: 'xxx.md', status: 'success', percent: 20},
-    {uid: '1121', size: 123, name: 'xxx1.md', status: 'error', percent: 20},
-    {uid: '1131', size: 444, name: 'xxx2.md', status: 'uploading', percent: 20},
-]
-export const SimpleComplete1: ComponentStory<typeof Upload> = (args) => {
-
+export const ASimpleUpload: ComponentStory<typeof Upload> = (args) => (
+    <Upload
+        {...args}
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    >
+        <Button size="lg" btnType="primary"><Icon icon="upload"/> 点击上传 </Button>
+    </Upload>
+)
+ASimpleUpload.storyName = '普通的 Upload 组件'
+export const BCheckUpload: ComponentStory<typeof Upload> = (args) => {
+    const checkFileSize = (file: File) => {
+        if (Math.round(file.size / 1024) > 50) {
+            alert('file too big')
+            return false;
+        }
+        return true;
+    }
     return (
         <Upload
             {...args}
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            name="fileName"
-            multiple
-            drag
+            beforeUpload={checkFileSize}
         >
-            <Icon icon="upload" size="5x" theme="secondary" />
-            <br/>
-            <p>点击或者拖动到此区域进行上传</p>
+            <Button size="lg" btnType="primary"><Icon icon="upload"/> 不能传大于50Kb！ </Button>
         </Upload>
     )
 }
-SimpleComplete1.storyName = 'upload 组件'
+BCheckUpload.storyName = '上传前检查文件大小'
+export const CDragUpload: ComponentStory<typeof Upload> = (args) => (
+    <Upload
+        {...args}
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        name="fileName"
+        multiple
+        drag
+    >
+        <Icon icon="upload" size="5x" theme="secondary"/>
+        <br/>
+        <p>点击或者拖动到此区域进行上传</p>
+    </Upload>
+)
+CDragUpload.storyName = '拖动上传'
